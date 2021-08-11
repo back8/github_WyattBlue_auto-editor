@@ -48,7 +48,7 @@ setup(
     include_package_data=True,
     install_requires=[
         'numpy',
-        'audiotsm2',
+        'audiofx',
         'opencv-python>=4.3',
         'youtube-dl',
         'av',

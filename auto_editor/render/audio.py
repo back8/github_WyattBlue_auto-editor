@@ -36,8 +36,7 @@ def fastAudio(in_file, out_file, chunks, speeds, log, fps, machineReadable, hide
         return len([x for x in a if x != 1 and x != 99999]) > 0
 
     if(custom_speeds(speeds)):
-        from audiotsm2 import phasevocoder
-        from audiotsm2.io.array import ArrReader, ArrWriter
+        import audiofx
 
     if(len(chunks) == 1 and chunks[0][2] == 0):
         log.error('Trying to create an empty file.')
@@ -69,13 +68,8 @@ def fastAudio(in_file, out_file, chunks, speeds, log, fps, machineReadable, hide
                 yPointerEnd = yPointer + spedChunk.shape[0]
                 newAudio[yPointer:yPointerEnd] = spedChunk
             else:
-                spedupAudio = np.zeros((0, 2), dtype=np.int16)
-                with ArrReader(spedChunk, channels, samplerate, 2) as reader:
-                    with ArrWriter(spedupAudio, channels, samplerate, 2) as writer:
-                        phasevocoder(reader.channels, speed=theSpeed).run(
-                            reader, writer
-                        )
-                        spedupAudio = writer.output
+                # spedupAudio = np.zeros((0, 2), dtype=np.int16)
+                spedupAudio = audiofx.phasevocoder(spedChunk, samplerate)
 
                 yPointerEnd = yPointer + spedupAudio.shape[0]
                 newAudio[yPointer:yPointerEnd] = spedupAudio
