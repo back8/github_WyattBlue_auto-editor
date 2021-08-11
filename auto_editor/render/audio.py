@@ -69,7 +69,7 @@ def fastAudio(in_file, out_file, chunks, speeds, log, fps, machineReadable, hide
                 newAudio[yPointer:yPointerEnd] = spedChunk
             else:
                 # spedupAudio = np.zeros((0, 2), dtype=np.int16)
-                spedupAudio = audiofx.phasevocoder(spedChunk, samplerate)
+                spedupAudio = audiofx.phasevocoder(spedChunk, samplerate, channels, theSpeed)
 
                 yPointerEnd = yPointer + spedupAudio.shape[0]
                 newAudio[yPointer:yPointerEnd] = spedupAudio
